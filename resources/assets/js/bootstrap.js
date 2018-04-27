@@ -54,3 +54,11 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import VueLoader from 'vue-loader';
+
+window.Vue = Vue;
+Vue.use(VueRouter);
