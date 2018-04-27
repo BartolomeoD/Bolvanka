@@ -1,10 +1,11 @@
 import VueRouter from 'vue-router'
 
 const routes = [
+   
     {
-        path: '/login',
-        component: require('./components/auth/login'),
-        name: 'login'
+        path: '/backend',
+        component: require('./components/auth/Login').default,
+        name: 'asd'
     }
 ];
 

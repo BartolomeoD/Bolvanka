@@ -58,7 +58,6 @@ if (token) {
 
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import VueLoader from 'vue-loader';
 
 window.Vue = Vue;
 Vue.use(VueRouter);
