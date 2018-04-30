@@ -19,6 +19,4 @@ Route::get('/backend', function () {
     return view('backend.entry');
 });
 
-Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');

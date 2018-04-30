@@ -16528,36 +16528,57 @@ if (inBrowser && window.Vue) {
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   data: function data() {
     return {
       name: {
         hasError: false,
-        value: ""
+        value: "",
+        errorMessage: ""
       },
       password: {
         hasError: false,
-        value: ""
+        value: "",
+        errorMessage: ""
       },
       remember_me: false
     };
   },
   methods: {
     login: function login(e) {
+      this.password.errorMessage = "";
+      this.password.hasError = false;
+      this.name.errorMessage = "";
+      this.name.hasError = false;
       e.preventDefault();
       var correct = true;
       if (this.name.value.length < 1) {
         console.log("not correct name");
         this.name.hasError = true;
+        this.name.errorMessage = "Не правильный логин";
       }
-      if (this.password.value.length < 7) {
+      if (this.password.value.length < 6) {
         console.log("not correct password");
         this.password.hasError = true;
+        this.password.errorMessage = "Не правильный пароль";
       }
 
       if (!this.name.hasError && !this.password.hasError) {
-        console.log("success");
+        Axios.post("/api/auth/login", {
+          name: this.name.value,
+          password: this.password.value
+        }).then(function (response) {
+          console.log(response);
+        }).then(function (error) {
+          console.log(error);
+        });
       }
     }
   },
@@ -16621,9 +16642,9 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(19);
+window.Axios = __webpack_require__(19);
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.Axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
@@ -16634,7 +16655,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 var token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+  window.Axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
   console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
@@ -49977,7 +49998,11 @@ var render = function() {
                       _vm.$set(_vm.name, "value", $event.target.value)
                     }
                   }
-                })
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "invalid-feedback" }, [
+                  _vm._v(_vm._s(_vm.name.errorMessage))
+                ])
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
@@ -50011,7 +50036,11 @@ var render = function() {
                       _vm.$set(_vm.password, "value", $event.target.value)
                     }
                   }
-                })
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "invalid-feedback" }, [
+                  _vm._v(_vm._s(_vm.password.errorMessage))
+                ])
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group form-check" }, [
